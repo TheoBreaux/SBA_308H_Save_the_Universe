@@ -1,23 +1,46 @@
-//use window.prompt to get info from user
-//use buttons in the browser, console.log, window.alert
+//grab intial graphics div
+const gameStartGraphics = document.getElementById("game-start-setup");
+//grab game kick alien butt button
+const kickAlienButtBtn = document.getElementById("kick-alien-butt-btn");
+//grab start game button
+const startGameBtn = document.getElementById("start-game-btn");
+//grab meet player prompt
+const meetPlayerPrompt = document.getElementById("meet-player-prompt");
+//add event listener to kick alien butt button
+kickAlienButtBtn.addEventListener("click", invasion);
+//add event listener to start game button
+startGameBtn.addEventListener("click", startGame);
+//grab player name input
+const playerNameInput = document.getElementById("player-name-input");
+//collect player name globally
+let playerName;
 
-function meetPlayer() {
-  document.createElement("div");
-
-  const playerName = prompt("Please enter your name cadet:");
-}
-
-const gameStartBtn = document.getElementById("game-start-btn");
-gameStartBtn.addEventListener("click", invasion);
-
+//removes initial graphics and gets player name
 function invasion() {
-  alert(
-    "The aliens have launched their attack! Click the button to fight back!👽"
-  );
+  gameStartGraphics.style.display = "none";
+  meetPlayerPrompt.style.display = "flex";
 }
 
 function startGame() {
-  gameStartBtn.style.display = "none";
+  if (playerNameInput.value !== "") {
+    playerName = playerNameInput.value;
+  } else {
+    playerName = "Player";
+  }
+
+  meetPlayerPrompt.style.display = "none";
+
+  const newDiv = document.createElement("div");
+  newDiv.classList.add("attack-begins");
+  newDiv.innerHTML = `
+    <p class="prompt">
+        <span class="name">${playerName}</span>, the aliens have launched their attack! Click the button to fight
+        back!👽
+    </p>
+    <img src="./images/alien-ship.png" alt="spaceship">
+    <button id="attack-btn">Attack</button>
+  `;
+  document.body.append(newDiv);
 }
 
 // function showAlert() {
