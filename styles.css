@@ -66,6 +66,10 @@ body {
   border: 10px outset yellowgreen;
 }
 
+#attack-btn {
+  margin-top: 0;
+}
+
 #meet-player-prompt {
   display: none;
   flex-direction: column;
