@@ -25,10 +25,11 @@ body {
   font-size: 1.5rem;
   font-weight: bold;
   font-family: "Audiowide", cursive;
+  align-self: center;
 }
 
 .name {
-  font-size: 4rem;
+  font-size: 3rem;
   color: orangered;
   font-family: "Orbitron", sans-serif;
 }
@@ -48,7 +49,6 @@ body {
 #start-game-btn,
 #attack-btn {
   margin-top: 30px;
-  width: 30%;
   padding: 25px;
   border: 10px double red;
   background-color: yellowgreen;
@@ -75,7 +75,7 @@ body {
   flex-direction: column;
   justify-content: center;
   position: fixed;
-  height: 500px;
+  /* height: 500px; */
   width: 75%;
   top: 50%;
   left: 50%;
@@ -86,8 +86,7 @@ body {
   box-shadow: 10px 10px 25px rgba(255, 69, 0, 1);
 }
 
-.prompt {
-  font-size: 2rem;
+.challenge-text {
   text-align: center;
 }
 
@@ -97,7 +96,7 @@ body {
   justify-content: center;
   position: fixed;
   width: 75%;
-  height: 500px;
+  height: 90vh;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

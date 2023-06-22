@@ -27,65 +27,105 @@ function startGame() {
   } else {
     playerName = "Player";
   }
-
   meetPlayerPrompt.style.display = "none";
-
-  const newDiv = document.createElement("div");
-  newDiv.classList.add("attack-begins");
-  newDiv.innerHTML = `
-    <p class="prompt">
-        <span class="name">${playerName}</span>, the aliens have launched their attack! Click the button to fight
-        back!👽
-    </p>
-    <img src="./images/alien-ship.png" alt="spaceship">
-    <button id="attack-btn">Attack</button>
-  `;
-  document.body.append(newDiv);
 }
 
-// function showAlert() {
-//   // Create the dialog box
-//   var dialog = document.createElement('div');
-//   dialog.classList.add('dialog');
+//create my ship
+const myShip = {
+  name: "USS Assembly",
+  hull: 20,
+  firepower: 5,
+  accuracy: 0.7,
+  attackAlien() {
+    if (Math.random() < alienShips[0].accuracy) {
+      console.log("You have been hit!", this.hull);
+      this.hull -= alienShips[0].firepower;
+    } else if (alienShips[0].hull < 0) {
+      console.log("You win!", this.hull);
+      console.log("alien:", alienShips[0].hull);
+      alienShips.shift();
+    }
+    console.log(alienShips);
+  },
+};
 
-//   // Add the message
-//   var message = document.createElement('p');
-//   message.textContent = "The aliens have invaded! What do you want to do?";
-//   dialog.appendChild(message);
+//define function to generate random whole values for alien ship properties
+function randomWholeNumberGenerator(min, max) {
+  const range = max - min + 1;
+  const randomNum = Math.floor(Math.random() * range) + min;
+  return randomNum;
+}
 
-//   // Add the buttons
-//   var fightButton = document.createElement('button');
-//   fightButton.textContent = "Fight Back";
-//   fightButton.addEventListener('click', fightBack);
-//   dialog.appendChild(fightButton);
+//define function to generate random float values for alien ship properties
+function randomFloatNumberGenerator(min, max) {
+  const range = max - min;
+  const randomNum = Math.random() * range + min;
+  const roundedNum = randomNum.toFixed(1);
+  return parseFloat(roundedNum);
+}
 
-//   var runButton = document.createElement('button');
-//   runButton.textContent = "Run Away";
-//   runButton.addEventListener('click', runAway);
-//   dialog.appendChild(runButton);
+//create ship class
+class Ship {
+  constructor(hull, firepower, accuracy, src) {
+    this.hull = hull;
+    this.firepower = firepower;
+    this.accuracy = accuracy;
+    this.src = src;
+  }
+  attack() {}
+}
 
-//   // Add the dialog box to the document
-//   document.body.appendChild(dialog);
-// }
+//store alien ship objects in array
+const alienShips = [];
 
-// function fightBack() {
-//   alert("You fought back against the aliens!");
-//   closeDialog();
-// }
+// creates the six alien ships and stores in array
+function battleShips() {
+  //create alien ships
+  for (let i = 0; i < 6; i++) {
+    const alienShip = new Ship(
+      randomWholeNumberGenerator(3, 6),
+      randomWholeNumberGenerator(2, 4),
+      randomFloatNumberGenerator(0.6, 0.8),
+      `./images/alien-ship${i}.png`
+    );
+    alienShips.push(alienShip);
+  }
+  return alienShips;
+}
 
-// function runAway() {
-//   alert("You ran away from the aliens!");
-//   closeDialog();
-// }
+console.log(battleShips());
 
-// function closeDialog() {
-//   var dialog = document.querySelector('.dialog');
-//   dialog.parentNode.removeChild(dialog);
-// }
+function battle() {
+  // i attack first alien ship, if i survive attack again,
+  myShip.attackAlien();
+}
 
-// there should be an i win function
+battle();
+
+// const newDiv = document.createElement("div");
+// newDiv.classList.add("attack-begins");
+// newDiv.innerHTML = `
+//   <p class="challenge-text">
+//       <span class="name">${playerName}</span>, <span class="prompt">the aliens have launched their attack! Click the ship to attack back!👽</span>
+//   </p>
+//   <img id="spaceship-image" src="./images/alien-ship.png" alt="spaceship">
+// `;
+// document.body.append(newDiv);
+
+// //grab spaceship image to add event listener
+// const spaceshipImage = document.getElementById("spaceship-image");
+
+// // add eventlistener to spaceship Image
+// spaceshipImage.addEventListener("click", attackSpaceship);
+
+function attackSpaceship() {
+  console.log("I FEEL ATACKED!!!");
+  //alien ship survival = random number generated greater less than 0.5, alien attacks again
+  //else if random number is great than 0.5, i attack the alien ship
+  //if i destroy ship (ships score is 0 or less, i win)
+}
+
 const myVictory = () => {
-  //i survive if number generated is higher than 0.5
   //if i survive, i have an option to attack again or retreat
   //if i retreat the game ends
   //if i destroy all six alien ships I win
@@ -97,9 +137,3 @@ const myDefeat = () => {
   // i die, if number generated is less than 0.5
   //if survuves attacks me again
 };
-
-// class Ship {
-//   constructor() {
-
-//   }
-// }
