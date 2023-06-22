@@ -125,8 +125,6 @@ let attackBtnPressed = false;
 //track if retreat button has been presssed
 let retreatBtnPressed = false;
 
-
-
 // create function to run battles
 function playGame() {
   //create six Alienship instances with loop for this round
@@ -140,21 +138,18 @@ function playGame() {
 
 function retreatBattle() {
   retreatBtnPressed = true;
-  console.log("RETREAT");
+  document.getElementById("player-name").style.display = "none";
+  responseMessage.innerText = "You retreated! Game Over";
 }
 
-
-
-
-
 function attackAliens(index) {
-  //update attack button being pressed to true
-  attackBtnPressed = true;
   const currentAlienShip = alienShips[index];
   document.getElementById("player-name").style.display = "none";
   responseMessage.innerText = `Attacking alien ship with hull!, ${currentAlienShip.hull}`;
   // i attack the first alien ship, 0 is the first alien ship in the array
   UssAssembly.attack(currentAlienShip);
+  //update attack button being pressed to true
+  attackBtnPressed = true;
 
   if (currentAlienShip.hull <= 0) {
     alienShips.shift();
@@ -163,9 +158,10 @@ function attackAliens(index) {
       responseMessage.innerText =
         "Alien ship has been destroyed. Attack again or retreat?";
 
+      attackBtnPressed = false;
       if (attackBtnPressed) {
         attackAliens(index);
-      } else {
+      } else if (retreatBtnPressed) {
         responseMessage.innerText = "You retreated! Game Over";
       }
     } else {
@@ -174,9 +170,11 @@ function attackAliens(index) {
   } else {
     responseMessage.innerText = "You have been hit. Attack again or retreat?";
 
+    attackBtnPressed = false;
+
     if (attackBtnPressed) {
       attackAliens(index);
-    } else {
+    } else if (retreatBtnPressed) {
       responseMessage.innerText = "You retreated! Game Over";
     }
   }
