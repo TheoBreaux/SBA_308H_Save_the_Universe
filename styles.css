@@ -2,19 +2,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Audiowide&display=swap");
 
 body {
-  height: 100%;
-  padding: 0;
-  margin: 0;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 #game-start-setup {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  text-align: center;
   position: absolute;
-  width: 100%;
+  width: 75%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -22,7 +25,7 @@ body {
 
 .title,
 .prompt {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: bold;
   font-family: "Audiowide", cursive;
   align-self: center;
@@ -47,7 +50,8 @@ body {
 
 #kick-alien-butt-btn,
 #start-game-btn,
-#attack-btn {
+#attack-btn,
+#retreat-btn {
   margin-top: 30px;
   padding: 25px;
   border: 10px double red;
@@ -61,21 +65,24 @@ body {
 
 #kick-alien-butt-btn:hover,
 #start-game-btn:hover,
-#attack-btn:hover {
+#attack-btn:hover,
+#retreat-btn:hover {
   background-color: red;
   border: 10px outset yellowgreen;
 }
 
-#attack-btn {
-  margin-top: 0;
+#response {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 #meet-player-prompt {
   display: none;
   flex-direction: column;
   justify-content: center;
+  align-self: center;
   position: fixed;
-  /* height: 500px; */
+  height: 500px;
   width: 75%;
   top: 50%;
   left: 50%;
@@ -86,7 +93,8 @@ body {
   box-shadow: 10px 10px 25px rgba(255, 69, 0, 1);
 }
 
-.challenge-text {
+#challenge-text,
+#response-message {
   text-align: center;
 }
 

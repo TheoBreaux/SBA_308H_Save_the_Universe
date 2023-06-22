@@ -14,6 +14,8 @@ startGameBtn.addEventListener("click", startGame);
 const playerNameInput = document.getElementById("player-name-input");
 //collect player name globally
 let playerName;
+//declare variabe to store UI response messages to player
+let responseMessage;
 
 //removes initial graphics and gets player name
 function invasion() {
@@ -28,22 +30,31 @@ function startGame() {
     playerName = "Player";
   }
   meetPlayerPrompt.style.display = "none";
-
+  const alienShipId = Math.floor(Math.random() * 6);
   const newDiv = document.createElement("div");
   newDiv.classList.add("attack-begins");
   newDiv.innerHTML = `
-  <p class="challenge-text">
-      <span class="name">${playerName}</span>, <span class="prompt">the aliens have launched their attack! Click the ship to attack back!👽</span>
+  <p id="challenge-text">
+      <span id="player-name" class="name">${playerName}</span> <span id="response-message" class="prompt">, the aliens have launched their attack! Click your response to their attack below!👽</span>
   </p>
-  <img id="spaceship-image" src="./images/alien-ship1.png" alt="spaceship">
+  <img id="spaceship-image" src="./images/alien-ship${alienShipId}.png" alt="spaceship">
+  <div id="response">
+  <button id="attack-btn">ATTACK!</button>
+  <button id="retreat-btn">RETREAT!</button>
+  </div>
 `;
   document.body.append(newDiv);
 
-  //grab spaceship image to add event listener
-  const spaceshipImage = document.getElementById("spaceship-image");
+  // grab response message element
+  responseMessage = document.getElementById("response-message");
 
-  // add eventlistener to spaceship Image
-  spaceshipImage.addEventListener("click");
+  //grab attack button  image to add event listener
+  const attackBtn = document.getElementById("attack-btn");
+  //grab retreat button
+  const retreatBtn = document.getElementById("retreat-btn");
+  // add eventlistener to response buttons
+  attackBtn.addEventListener("click", playGame);
+  retreatBtn.addEventListener("click", retreatBattle);
 }
 
 //create ship class
@@ -109,6 +120,12 @@ class AlienShip extends Ship {
 const alienShips = [];
 //create my Myship instance for this battle round
 const UssAssembly = new MyShip(20, 5, 0.7, "USS Assembly");
+//track if attack button has been pressed
+let attackBtnPressed = false;
+//track if retreat button has been presssed
+let retreatBtnPressed = false;
+
+
 
 // create function to run battles
 function playGame() {
@@ -117,14 +134,25 @@ function playGame() {
     // push randomly created AlienShips to array
     alienShips.push(new AlienShip());
   }
-  console.log("Alien ships have started attacking! Get them!");
   // call function to attack alien ship, 0 is the first alien ship in the array
   attackAliens(0);
 }
 
+function retreatBattle() {
+  retreatBtnPressed = true;
+  console.log("RETREAT");
+}
+
+
+
+
+
 function attackAliens(index) {
+  //update attack button being pressed to true
+  attackBtnPressed = true;
   const currentAlienShip = alienShips[index];
-  console.log("Attacking alien ship with hull", currentAlienShip.hull);
+  document.getElementById("player-name").style.display = "none";
+  responseMessage.innerText = `Attacking alien ship with hull!, ${currentAlienShip.hull}`;
   // i attack the first alien ship, 0 is the first alien ship in the array
   UssAssembly.attack(currentAlienShip);
 
@@ -132,27 +160,24 @@ function attackAliens(index) {
     alienShips.shift();
 
     if (alienShips.length > 0) {
-      let retreat = prompt(
-        "Alien ship has been destroyed. Attack again or retreat? (attack/retreat)"
-      );
-      if (retreat.toLowerCase() === "attack") {
+      responseMessage.innerText =
+        "Alien ship has been destroyed. Attack again or retreat?";
+
+      if (attackBtnPressed) {
         attackAliens(index);
       } else {
-        console.log("You retreated! Game Over");
+        responseMessage.innerText = "You retreated! Game Over";
       }
     } else {
-      console.log("Congratulations! You've won this battle");
+      responseMessage.innerText = "Congratulations! You've won this battle";
     }
   } else {
-    let retreat = prompt(
-      "You have been hit. Attack again or retreat? (attack/retreat)"
-    );
-    if (retreat.toLowerCase() === "attack") {
+    responseMessage.innerText = "You have been hit. Attack again or retreat?";
+
+    if (attackBtnPressed) {
       attackAliens(index);
     } else {
-      console.log("You retreated. Game Over");
+      responseMessage.innerText = "You retreated! Game Over";
     }
   }
 }
-
-// playGame();
