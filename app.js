@@ -36,7 +36,7 @@ const myShip = {
   hull: 20,
   firepower: 5,
   accuracy: 0.7,
-  attackAlien() {
+  attackAlien(opponent) {
     if (Math.random() < alienShips[0].accuracy) {
       console.log("You have been hit!", this.hull);
       this.hull -= alienShips[0].firepower;
