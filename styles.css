@@ -8,62 +8,72 @@ body {
   height: 100%;
   margin: 0;
   padding: 0px;
+  min-width: 450px;
 }
 
 #game-start-setup {
   border: 3px solid black;
-  box-shadow: 10px 10px 25px rgba(255, 69, 0, 1);
+  box-shadow: 5px 5px 15px rgba(255, 69, 0, 1);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
+  padding: 20px;
+  margin: 0 auto;
   position: absolute;
-  width: 75%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 20px;
+  width: 75%;
 }
 
 .title,
 .prompt {
-  font-size: 1.75rem;
+  font-size: 1rem;
   font-weight: bold;
   font-family: "Audiowide", cursive;
   align-self: center;
 }
 
 .name {
-  font-size: 3rem;
-  color: orangered;
+  font-size: 2rem;
+  color: #ff6000;
   font-family: "Orbitron", sans-serif;
   font-weight: bold;
 }
 
-#player-name-input {
-  width: 90%;
-  height: 40px;
-  border-radius: 12px;
-  padding: 10px;
-  font-size: 2rem;
+#player-name-input,
+#ship-name-input {
+  color: #454545;
+  font-size: 1rem;
   font-family: "Audiowide", cursive;
-  box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.5);
-  align-self: center;
+  padding: 10px;
+  display: block;
+  width: 300px;
+  border: none;
+  border-bottom: 1px solid #757575;
+  box-shadow: 5px 5px 15px rgba(255, 69, 0, 1);
+}
+
+#player-name-input:focus,
+#ship-name-input:focus {
+  outline: none;
 }
 
 .stats {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: -80%;
 }
 
 #spaceship-name,
 #hull-value {
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: bold;
   font-family: "Audiowide", cursive;
+  margin-top: 0;
+  padding-top: 0;
 }
 
 #spaceship-name {
@@ -73,14 +83,15 @@ body {
 #kick-alien-butt-btn,
 #start-game-btn,
 #attack-btn,
-#retreat-btn {
-  padding: 25px;
-  border: 10px double red;
+#retreat-btn,
+#reset-game-btn {
+  padding: 10px;
+  border: 10px double #ffa559;
   background-color: yellowgreen;
   border-radius: 15px;
   font-family: "Orbitron", sans-serif;
   font-weight: bold;
-  font-size: 1.5rem;
+  /* font-size: 1.5rem; */
   align-self: center;
 }
 
@@ -91,32 +102,48 @@ body {
 #kick-alien-butt-btn:hover,
 #start-game-btn:hover,
 #attack-btn:hover,
-#retreat-btn:hover {
+#retreat-btn:hover,
+#reset-game-btn:hover {
   background-color: red;
   border: 10px outset yellowgreen;
+}
+
+#reset-game-btn {
+  display: none;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  margin-top: 30%;
+  background-color: orangered;
+  border: 10px double orange;
+}
+
+#reset-game-btn:hover {
+  background-color: yellowgreen;
+  border: 10px double orange;
 }
 
 #response {
   display: flex;
   justify-content: space-evenly;
-  margin-bottom: -70%;
+  width: 100%;
 }
 
 #meet-player-prompt {
+  border: 3px solid black;
+  box-shadow: 5px 5px 15px rgba(255, 69, 0, 1);
   display: none;
   flex-direction: column;
   justify-content: center;
-  align-self: center;
-  position: fixed;
-  height: 500px;
-  width: 75%;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  margin: 0 auto;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-  border: 3px solid black;
-  box-shadow: 10px 10px 25px rgba(255, 69, 0, 1);
+  width: 75%;
 }
 
 #challenge-text {
@@ -154,24 +181,24 @@ body {
 }
 
 .attack-begins {
+  border: 3px solid black;
+  box-shadow: 5px 5px 15px rgba(255, 69, 0, 1);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  position: fixed;
-  width: 75%;
-  height: 90vh;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  /* margin: 20px 0; */
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 10px;
-  border: 3px solid black;
-  box-shadow: 10px 10px 25px rgba(255, 69, 0, 1);
+  width: 75%;
 }
 
-@media (max-width: 767px) {
-  /* Add your CSS styles here */
-  body {
-    background-color: lightgreen;
-  }
+#spaceship-image {
+  width: 90%;
+  max-width: 100%;
+  max-height: 100%;
 }
