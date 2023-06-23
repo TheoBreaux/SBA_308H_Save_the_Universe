@@ -22,61 +22,8 @@ let responseMessage;
 let attackMessage;
 //declare variable to store attack button
 let attackBtn;
-
-//removes initial graphics and gets player name
-function invasion() {
-  gameStartGraphics.style.display = "none";
-  meetPlayerPrompt.style.display = "flex";
-}
-
-function startGame() {
-  if (playerNameInput.value !== "") {
-    playerName = playerNameInput.value;
-  } else {
-    playerName = "Player";
-  }
-  meetPlayerPrompt.style.display = "none";
-  const alienShipId = Math.floor(Math.random() * 6);
-  const newDiv = document.createElement("div");
-  newDiv.classList.add("attack-begins");
-  newDiv.innerHTML = `
-  <div class="stats">
-  <p id="spaceship-name"><span class="name">Ship Name: </span>${UssAssembly.name}</p>
-  <p id="hull-value"><span class="name">Hull: </span>${UssAssembly.hull}</p>
-  </div>
-  <p id="challenge-text">
-      <span id="player-name" class="name">
-        ${playerName}</span><span id="response-message" class="prompt">, the aliens have launched their attack! Click your response to their attack below!👽
-      </span>
-      <span id="attack-message" class="prompt">
-      </span>
-  </p>
-  <img id="spaceship-image" src="./images/alien-ship${alienShipId}.png" alt="spaceship">
-  <div id="response">
-  <button id="attack-btn">ATTACK!</button>
-  <button id="retreat-btn">RETREAT!</button>
-  </div>
-`;
-  document.body.append(newDiv);
-
-  //grab spaceship name display for UI
-  const spaceshipName = document.getElementById("spaceship-name");
-  //grab hull value
-  const hullValue = document.getElementById("hull-value");
-  //grab spaceship image
-  spaceshipImage = document.getElementById("spaceship-image");
-  // grab response message element
-  responseMessage = document.getElementById("response-message");
-  //grab attack message element
-  attackMessage = document.getElementById("attack-message");
-  //grab attack button  image to add event listener
-  attackBtn = document.getElementById("attack-btn");
-  //grab retreat button
-  const retreatBtn = document.getElementById("retreat-btn");
-  // add eventlistener to response buttons
-  attackBtn.addEventListener("click", playGame);
-  retreatBtn.addEventListener("click", retreatBattle);
-}
+//declare variable to store hull value
+let hullValue;
 
 //create ship class
 class Ship {
@@ -154,21 +101,68 @@ let attackBtnPressed = false;
 //track if retreat button has been presssed
 let retreatBtnPressed = false;
 
-// create function to run battles
-function playGame() {
-  //styling
-  document.getElementById("challenge-text").style.display = "flex";
-  document.getElementById("challenge-text").style.flexDirection = "column";
-  //create six Alienship instances with loop for this round
-  for (let i = 0; i < 6; i++) {
-    // push randomly created AlienShips to array
-    alienShips.push(new AlienShip());
+//create alien space ships
+for (let i = 0; i < 6; i++) {
+  // push randomly created AlienShips to array
+  alienShips.push(new AlienShip());
+}
+
+//removes initial graphics and gets player name
+function invasion() {
+  gameStartGraphics.style.display = "none";
+  meetPlayerPrompt.style.display = "flex";
+}
+
+function startGame() {
+  if (playerNameInput.value !== "") {
+    playerName = playerNameInput.value;
+  } else {
+    playerName = "Player";
   }
-  //remove event listener from attack button
-  attackBtn.removeEventListener("click", playGame);
-  // call function to attack alien ship, 0 is the first alien ship in the array
-  attackAliens(0);
-  attackBtn.addEventListener("click", attackAliens);
+  meetPlayerPrompt.style.display = "none";
+  const alienShipId = Math.floor(Math.random() * 6);
+  const newDiv = document.createElement("div");
+  newDiv.classList.add("attack-begins");
+  newDiv.innerHTML = `
+  <div class="stats">
+  <p id="spaceship-name"><span class="name">Ship Name: </span>${UssAssembly.name}</p>
+  <p><span class="name">Hull: </span><span id="hull-value">${UssAssembly.hull}</span></p>
+  </div>
+  <p id="challenge-text">
+      <span id="player-name" class="name">
+        ${playerName}</span><span id="response-message" class="prompt">, the aliens have launched their attack! Click your response to their attack below!👽
+      </span>
+      <span id="attack-message" class="prompt">
+      </span>
+  </p>
+  <img id="spaceship-image" src="./images/alien-ship${alienShipId}.png" alt="spaceship">
+  <div id="response">
+  <button id="attack-btn">ATTACK!</button>
+  <button id="retreat-btn">RETREAT!</button>
+  </div>
+`;
+  document.body.append(newDiv);
+
+  //grab spaceship name display for UI
+  const spaceshipName = document.getElementById("spaceship-name");
+  //grab hull value
+  hullValue = document.getElementById("hull-value");
+  //grab spaceship image
+  spaceshipImage = document.getElementById("spaceship-image");
+  // grab response message element
+  responseMessage = document.getElementById("response-message");
+  //grab attack message element
+  attackMessage = document.getElementById("attack-message");
+  //grab attack button  image to add event listener
+  attackBtn = document.getElementById("attack-btn");
+  //grab retreat button
+  const retreatBtn = document.getElementById("retreat-btn");
+  // add eventlistener to retrat button
+  retreatBtn.addEventListener("click", retreatBattle);
+  // add event listener to attack button
+  attackBtn.addEventListener("click", function () {
+    attackAliens(0);
+  });
 }
 
 function retreatBattle() {
@@ -176,21 +170,30 @@ function retreatBattle() {
   document.getElementById("player-name").style.display = "none";
   responseMessage.innerText = "You retreated! Game Over";
   attackBtn.disabled = true;
+  attackMessage.style.display = "none";
+  responseMessage.style.color = "Red";
+  responseMessage.style.fontSize = "5rem";
 }
 
+
+
+
 function attackAliens(index) {
+  //styling
+  document.getElementById("challenge-text").style.display = "flex";
+  document.getElementById("challenge-text").style.flexDirection = "column";
   //spaceship image trembles
   spaceshipImage.classList.add("attacked");
   //declare variable of first ship in array to battle
   const currentAlienShip = alienShips[index];
 
   document.getElementById("player-name").style.display = "none";
+  hullValue.innerText = UssAssembly.hull;
 
   // i attack the first alien ship, 0 is the first alien ship in the array
   UssAssembly.attack(currentAlienShip);
   //update attack button being pressed to true
   attackBtnPressed = true;
-
   // responseMessage.innerText = `Attacking alien ship with hull, ${currentAlienShip.hull}`;
   if (currentAlienShip.hull <= 0) {
     alienShips.shift();
