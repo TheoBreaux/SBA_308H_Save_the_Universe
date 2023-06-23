@@ -211,7 +211,7 @@ function attackAliens(index) {
       setTimeout(() => {
         //spaceship image trembles
         spaceshipImage.classList.add("attacked");
-      }, 200);
+      }, 500);
 
       attackBtnPressed = false;
       if (attackBtnPressed) {
@@ -237,6 +237,7 @@ function attackAliens(index) {
 
     if (playerShip.hull <= 0) {
       responseMessage.innerText = "Your hull has been destroyed! Game Over!";
+      hullValue.innerText = playerShip.hull;
       attackBtn.disabled = true;
       retreatBtn.disabled = true;
       responseMessage.style.color = "Red";
