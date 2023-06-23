@@ -51,11 +51,28 @@ body {
   align-self: center;
 }
 
+.stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -80%;
+}
+
+#spaceship-name,
+#hull-value {
+  font-size: 2.5rem;
+  font-weight: bold;
+  font-family: "Audiowide", cursive;
+}
+
+#spaceship-name {
+  margin-bottom: 0;
+}
+
 #kick-alien-butt-btn,
 #start-game-btn,
 #attack-btn,
 #retreat-btn {
-  margin-top: 30px;
   padding: 25px;
   border: 10px double red;
   background-color: yellowgreen;
@@ -64,6 +81,10 @@ body {
   font-weight: bold;
   font-size: 1.5rem;
   align-self: center;
+}
+
+#start-game-btn {
+  margin-top: 30px;
 }
 
 #kick-alien-butt-btn:hover,
@@ -77,6 +98,7 @@ body {
 #response {
   display: flex;
   justify-content: space-evenly;
+  margin-bottom: -70%;
 }
 
 #meet-player-prompt {
@@ -96,9 +118,38 @@ body {
   box-shadow: 10px 10px 25px rgba(255, 69, 0, 1);
 }
 
-#challenge-text,
+#challenge-text {
+  text-align: center;
+}
+
 #response-message {
   text-align: center;
+  margin-bottom: 5%;
+}
+
+@keyframes attacked {
+  0% {
+    transform: translate(0, 0) rotate(0);
+  }
+  25% {
+    transform: translate(-2px, -2px) rotate(-2deg);
+  }
+  50% {
+    transform: translate(2px, 2px) rotate(2deg);
+  }
+  75% {
+    transform: translate(-2px, -2px) rotate(-2deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0);
+  }
+}
+
+.attacked {
+  animation-name: attacked;
+  animation-duration: 0.4s;
+  animation-timing-function: linear;
+  animation-iteration-count: 1.5;
 }
 
 .attack-begins {
